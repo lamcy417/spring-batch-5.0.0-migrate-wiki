@@ -32,7 +32,7 @@
 
 <img alt="3-artifactory-build-release.png" src="https://raw.githubusercontent.com/wiki/spring-projects/spring-batch/images/release-process/3-artifactory-build-release.png">
 
-2.3.1 Fill in the form with release version and VCS configuration then hit `Build and Release to Artifactory`.
+2.3.1 Fill in the form with release version and VCS configuration then hit `Build and Release to Artifactory`. *NB:* Uncheck the `Use Release Branch` in the previous screenshot.
 
 2.3.2 Check uploaded jars in http://repo.spring.io/libs-staging-local/ and do a smoke test with the staged version (check the integrity of the artifacts to see if jars are not corrupted or empty, etc).
 
