@@ -10,13 +10,13 @@
 
 # Part 1: Pre release tasks
 
-1.1 Get lastest changes from the upstream repository of the branch being released.
+1.1 Get latest changes from the upstream repository of the branch being released.
 
 1.2 Check if `build.gradle` refers to any snapshot/milestone dependencies.
 
 1.3 Disable the `Gradle` build plan in Bamboo:
 
-TODO images/1.png
+<img alt="1-disable-build-plan" src="https://raw.githubusercontent.com/wiki/spring-projects/spring-batch/images/release-process/1-disable-build-plan.png">
 
 # Part 2: Release to Artifactory
 
@@ -24,13 +24,13 @@ TODO images/1.png
 
 2.2 Go to `Artifactory build info` and check artifacts:
 
-TODO images/2.png
+<img alt="2-1-check-build-info" src="https://raw.githubusercontent.com/wiki/spring-projects/spring-batch/images/release-process/2-1-check-build-info.png">
 
-TODO images/3.png
+<img alt="2-2-check-artifacts" src="https://raw.githubusercontent.com/wiki/spring-projects/spring-batch/images/release-process/2-2-check-artifacts.png">
 
 2.3 Go to `Artifactory Release & Promotion` tab:
 
-TODO images/4.png
+<img alt="3-artifactory-build-release.png" src="https://raw.githubusercontent.com/wiki/spring-projects/spring-batch/images/release-process/3-artifactory-build-release.png">
 
 2.3.1 Fill in the form with release version and VCS configuration then hit `Build and Release to Artifactory`.
 
@@ -38,7 +38,7 @@ TODO images/4.png
 
 2.4 Promote the release to Artifactory:
 
-TODO images/5.png
+<img alt="4-artifactory-promote" src="https://raw.githubusercontent.com/wiki/spring-projects/spring-batch/images/release-process/4-artifactory-promote.png">
 
 **NOTE:** For "Target promotion repository" field, select:
 
@@ -47,7 +47,7 @@ TODO images/5.png
 
 2.5 Go to github and check if the release branch/tag are created:
 
-TODO images/6.png
+<img alt="5-github" src="https://raw.githubusercontent.com/wiki/spring-projects/spring-batch/images/release-process/5-github.png">
 
 2.6 Check uploaded jars in http://repo.spring.io/libs-release-local/
 
@@ -61,15 +61,15 @@ TODO images/6.png
 
 3.1.2 Check if published modules are as expected:
 
-TODO images/7.png
+<img alt="6-published-modules.png" src="https://raw.githubusercontent.com/wiki/spring-projects/spring-batch/images/release-process/6-published-modules.png">
 
 3.1.3 Go to `General build info` and click `Distribute`:
 
-TODO images/8.png
+<img alt="7-distribute" src="https://raw.githubusercontent.com/wiki/spring-projects/spring-batch/images/release-process/7-distribute.png">
 
 First, select "spring-distributions" in "Distribution Repository" do a "Dry run". There might be 3 errors about "schema.zip", "docs.zip" and "dist.zip" because they do not match any rule for artifacts with type Maven. These 3 errors can be safely ignored:
 
-TODO images/9.png
+<img alt="8-errors" src="https://raw.githubusercontent.com/wiki/spring-projects/spring-batch/images/release-process/8-errors.png">
 
 **Any other error should be carefully analyzed!**
 
@@ -79,13 +79,13 @@ Then click "Distribute". Artifacts should now be promoted to Bintray.
 
 3.2.1 Go to https://bintray.com and login as `spring-operator`.
 
-3.2.2 Select the corresponfing release from the home page:
+3.2.2 Select the corresponding release from the home page:
 
-TODO images/10.png
+<img alt="9-bintray" src="https://raw.githubusercontent.com/wiki/spring-projects/spring-batch/images/release-process/9-bintray.png">
 
 3.2.3 Go to `Maven Central` tab:
 
-TODO images/11.png
+<img alt="10-sync" src="https://raw.githubusercontent.com/wiki/spring-projects/spring-batch/images/release-process/10-sync.png">
 
 3.2.4 Fill in the form with the credentials of the "oss.sonatype.org" account (`springsource`) from LastPass vault (since we are pushing to "oss.sonatype.org") and hit "Sync".
 
@@ -93,7 +93,7 @@ TODO images/11.png
 
 3.2.6 In `Staging Repositories` tab, select the staged release and check its content/activity:
 
-TODO images/12.png
+<img alt="11-sonatype" src="https://raw.githubusercontent.com/wiki/spring-projects/spring-batch/images/release-process/11-sonatype.png">
 
 After a few minutes, the staging repository will be **automatically** closed and the release will be pushed to Maven Central repository.
 
