@@ -95,7 +95,7 @@ Then click "Distribute". Artifacts should now be promoted to Bintray.
 
 <img alt="11-sonatype" src="https://raw.githubusercontent.com/wiki/spring-projects/spring-batch/images/release-process/11-sonatype.png">
 
-After a few minutes, the staging repository will be **automatically** closed and the release will be pushed to Maven Central repository.
+After a few minutes, the staging repository will be **automatically** closed and the release will be pushed to Maven Central repository. Once the staging repository is closed, an information message will appear: `Staging repository has been released and can be safely dropped`. It is then safe to drop the repository.
 
 # Part 4: Post release tasks
 
