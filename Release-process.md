@@ -113,6 +113,8 @@ After a few minutes, the staging repository will be **automatically** closed and
 
 4.7 Write email to the team.
 
+4.8 Update `build.gradle` with snapshot versions of Spring Projects (Framework, AMQP, DATA, Integration and Kafka). This is to ensure the CI server builds against the latest snapshots and avoid last minute surprises during the next release.
+
 # Part 5: Rolling Back a release
 
 If anything goes wrong before promoting to Maven Central:
