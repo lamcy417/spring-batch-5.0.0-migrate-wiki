@@ -109,9 +109,9 @@ After a few minutes, the staging repository will be **automatically** closed and
 
 4.5 Write release announcement blog post.
 
-4.6 Tweet about the release (make sure to cc `@SpringCentral` until `@SpringBatch` handle is ready).
+4.6 Tweet about the release using `@SpringBatch` handle.
 
-4.7 Write email to the team.
+4.7 Post a message in the `#spring-release` slack channel.
 
 4.8 Update `build.gradle` with snapshot versions of Spring Projects (Framework, AMQP, DATA, Integration and Kafka). This is to ensure the CI server builds against the latest snapshots of Spring Projects and avoid last minute surprises during the next release.
 
