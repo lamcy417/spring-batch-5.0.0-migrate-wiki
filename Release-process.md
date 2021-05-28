@@ -83,6 +83,9 @@ This staging repository Id is needed for the next step.
 
 If everything looks good, the staging repository can be closed and released from the UI. Otherwise, it should be dropped.
 
+NB: If an extra check should be done from this staging repository, then the repository should be closed to be able
+to import jars from it and test them. Otherwise the content will not be visible.
+
 # Part 4: Post release tasks
 
 4.1 Update the `current` and `current-SNAPSHOT` symbolic links on the docs server.
