@@ -43,7 +43,7 @@ The following releases are end of life:
 
 | Version | Released | End of Life|
 |:------- |:---------|:-----------|
-| 4.1.x | October 2018 | Avril 2020 |
+| 4.1.x | October 2018 | April 2020 |
 | 3.0.x | May 2014 | January 2019 |
 
 All releases prior to 3.x are also not supported anymore.
