@@ -6,7 +6,7 @@ This document is meant to help you migrate your application to Spring Batch 5.0.
 
 ## JDK 17 baseline
 
-TBD
+Spring Batch 5 is based on Spring Framework 6 which requires Java 17 as a minimum version.
 
 ## Dependencies upgrade
 
@@ -14,7 +14,27 @@ TBD
 
 ## DDL scripts updates
 
-TBD
+#### MS SQLServer
+
+Up until v4, the DDL script for MS SQLServer used tables to emulates sequences. In this version, this usage has been updated with real sequences:
+
+```sql
+CREATE SEQUENCE BATCH_STEP_EXECUTION_SEQ START WITH 0 MINVALUE 0 MAXVALUE 9223372036854775807 NO CACHE NO CYCLE;
+CREATE SEQUENCE BATCH_JOB_EXECUTION_SEQ START WITH 0 MINVALUE 0 MAXVALUE 9223372036854775807 NO CACHE NO CYCLE;
+CREATE SEQUENCE BATCH_JOB_SEQ START WITH 0 MINVALUE 0 MAXVALUE 9223372036854775807 NO CACHE NO CYCLE;
+```
+
+New applications can use the provided script with no modification. Existing applications should consider to modify the snippet above to start sequences from the last value in sequences tables that were used with v4.
+
+#### Oracle
+
+In this version, Oracle sequences are now ordered. The sequences creation script has been updated for new applications. Existing applications can use the migration script in `org/springframework/batch/core/migration/5.0/migration-oracle.sql` to alter the existing sequences.
+
+## Job repository/explorer configuration updates
+
+The Map-based job repository/explorer implementation were deprecated in v4 and completely removed in v5. You should use the Jdbc-based implementation instead. Unless you are using a custom Job repository/explorer implementation, the `@EnableBatchProcessing` annotation will configure a Jdbc-based `JobRepository` which requires a `DataSource` bean in the application context.
+
+// TODO Add code example of migration
 
 # Deprecated APIs
 
