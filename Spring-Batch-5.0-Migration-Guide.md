@@ -6,7 +6,7 @@ This document is meant to help you migrate your application to Spring Batch 5.0.
 
 ## JDK 17 baseline
 
-Spring Batch 5 is based on Spring Framework 6 which requires Java 17 as a minimum version.
+Spring Batch 5 is based on Spring Framework 6 which requires Java 17 as a minimum version.So you need to use Java 17+ to run Spring Batch 5 applications.
 
 ## Dependencies upgrade
 
@@ -24,7 +24,9 @@ CREATE SEQUENCE BATCH_JOB_EXECUTION_SEQ START WITH 0 MINVALUE 0 MAXVALUE 9223372
 CREATE SEQUENCE BATCH_JOB_SEQ START WITH 0 MINVALUE 0 MAXVALUE 9223372036854775807 NO CACHE NO CYCLE;
 ```
 
-New applications can use the provided script with no modification. Existing applications should consider to modify the snippet above to start sequences from the last value in sequences tables that were used with v4.
+New applications can use the provided script with no modifications. Existing applications should consider modifying the snippet above to start sequences from the last value in sequence tables used with v4.
+
+// TODO see if this can be automated in a script
 
 #### Oracle
 
