@@ -38,6 +38,11 @@ The Map-based job repository/explorer implementation were deprecated in v4 and c
 
 // TODO Add code example of migration
 
+## Data types updates
+
+* Metric counters (`readCount`, `writeCount`, etc) in `org.springframework.batch.core.StepExecution` and `org.springframework.batch.core.StepContribution` have been changed from `int` to `long`. All getters and setters have been updated accordingly.
+* The `skipCount` parameter in `org.springframework.batch.core.step.skip.SkipPolicy#shouldSkip` has been changed from `int` to `long`. This is related to the previous point.
+
 # Deprecated APIs
 
 TBD
