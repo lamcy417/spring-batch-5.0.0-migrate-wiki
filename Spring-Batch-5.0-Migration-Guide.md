@@ -14,6 +14,10 @@ TBD
 
 ## DDL scripts updates
 
+#### Oracle
+
+In this version, Oracle sequences are now ordered. The sequences creation script has been updated for new applications. Existing applications can use the migration script in `org/springframework/batch/core/migration/5.0/migration-oracle.sql` to alter the existing sequences.
+
 #### MS SQLServer
 
 Up until v4, the DDL script for MS SQLServer used tables to emulates sequences. In this version, this usage has been updated with real sequences:
@@ -28,15 +32,9 @@ New applications can use the provided script with no modifications. Existing app
 
 // TODO see if this can be automated in a script
 
-#### Oracle
-
-In this version, Oracle sequences are now ordered. The sequences creation script has been updated for new applications. Existing applications can use the migration script in `org/springframework/batch/core/migration/5.0/migration-oracle.sql` to alter the existing sequences.
-
 ## Job repository/explorer configuration updates
 
 The Map-based job repository/explorer implementation were deprecated in v4 and completely removed in v5. You should use the Jdbc-based implementation instead. Unless you are using a custom Job repository/explorer implementation, the `@EnableBatchProcessing` annotation will configure a Jdbc-based `JobRepository` which requires a `DataSource` bean in the application context.
-
-// TODO Add code example of migration
 
 ## Data types updates
 
