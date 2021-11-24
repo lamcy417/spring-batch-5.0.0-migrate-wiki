@@ -10,16 +10,6 @@ Spring Batch follows the [VMware Tanzu OSS support policy](https://tanzu.vmware.
 All Spring Batch releases are publicly available from Maven Central and https://repo.spring.io.
 We do not have a private repository reserved only for paying customers.
 
-## End of Life
-
-Spring Batch releases are marked as "end of life" when they are no longer supported or released in any form.
-If you are running an EOL version, you should upgrade as soon as possible.
-
-Please note that a version can be out of support before it is end of life.
-During this time you should only expect releases for critical bugs or security issues.
-
-A Spring Batch release is supported as long as the last Spring Boot version that brings it is supported.
-
 ## Releases
 
 ### Release Schedule
@@ -30,20 +20,14 @@ Patch releases are published as necessary.
 
 As much as possible, we recommend that all users migrate to the latest supported release.
 
-### Released Versions
+### End of Life
 
-The following releases are actively maintained:
+Spring Batch releases are marked as "end of life" when they are no longer supported or released in any form.
+If you are running an EOL version, you should upgrade as soon as possible.
 
-| Version | Released | Spring Boot version | Expected End of Life|
-|:------- |:---------|:--------------------|:--------------------|
-| 4.3.x   | October 2020 | 2.5.x | February 2023|
-| 4.2.x   | October 2019 | 2.3.x | February 2022 |
+Please note that a version can be out of support before it is end of life.
+During this time you should only expect releases for critical bugs or security issues.
 
-The following releases are end of life:
+A Spring Batch release is supported as long as the last Spring Boot version that brings it is supported.
 
-| Version | Released | End of Life|
-|:------- |:---------|:-----------|
-| 4.1.x | October 2018 | April 2020 |
-| 3.0.x | May 2014 | January 2019 |
-
-All releases prior to 3.x are also not supported anymore.
+Please check the [support page](https://spring.io/projects/spring-batch#support) for more details about released versions and their OSS and Commercial support periods.
