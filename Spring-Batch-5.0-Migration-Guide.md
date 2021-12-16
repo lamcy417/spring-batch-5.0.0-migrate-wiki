@@ -6,7 +6,7 @@ This document is meant to help you migrate your application to Spring Batch 5.0.
 
 ## JDK 17 baseline
 
-Spring Batch 5 is based on Spring Framework 6 which requires Java 17 as a minimum version.So you need to use Java 17+ to run Spring Batch 5 applications.
+Spring Batch 5 is based on Spring Framework 6 which requires Java 17 as a minimum version. Therefore, you need to use Java 17+ to run Spring Batch 5 applications.
 
 ## Dependencies upgrade
 
@@ -30,11 +30,9 @@ CREATE SEQUENCE BATCH_JOB_SEQ START WITH 0 MINVALUE 0 MAXVALUE 92233720368547758
 
 New applications can use the provided script with no modifications. Existing applications should consider modifying the snippet above to start sequences from the last value in sequence tables used with v4.
 
-// TODO see if this can be automated in a script
-
 ## Job repository/explorer configuration updates
 
-The Map-based job repository/explorer implementation were deprecated in v4 and completely removed in v5. You should use the Jdbc-based implementation instead. Unless you are using a custom Job repository/explorer implementation, the `@EnableBatchProcessing` annotation will configure a Jdbc-based `JobRepository` which requires a `DataSource` bean in the application context.
+The Map-based job repository/explorer implementation were deprecated in v4 and completely removed in v5. You should use the Jdbc-based implementation instead. Unless you are using a custom Job repository/explorer implementation, the `@EnableBatchProcessing` annotation will configure a Jdbc-based `JobRepository` which requires a `DataSource` bean in the application context. The `DataSource` bean could refer to an embedded database like H2, HSQL, etc to work with an in-memory job repository.
 
 ## Data types updates
 
