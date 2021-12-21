@@ -10,7 +10,13 @@ Spring Batch 5 is based on Spring Framework 6 which requires Java 17 as a minimu
 
 ## Dependencies upgrade
 
-TBD
+Spring Batch 5 is updating its Spring dependencies across the board to the following versions:
+
+* Spring Framework 6
+* Spring Integration 6
+* Spring Data 3
+* Spring AMQP 3
+* Spring for Apache Kafka 3
 
 ## DDL scripts updates
 
@@ -41,8 +47,55 @@ The Map-based job repository/explorer implementation were deprecated in v4 and c
 
 # Deprecated APIs
 
-TBD
+The following APIs have been deprecated in version 5.0:
+
+* `org.springframework.batch.core.listener.ChunkListenerSupport`
+* `org.springframework.batch.core.listener.StepExecutionListenerSupport`
+* `org.springframework.batch.repeat.listener.RepeatListenerSupport`
+* `org.springframework.batch.core.listener.JobExecutionListenerSupport`
+* `org.springframework.batch.core.listener.SkipListenerSupport`
+* `org.springframework.batch.item.data.Neo4jItemReader`
+* `org.springframework.batch.item.data.builder.Neo4jItemWriterBuilder`
+* `org.springframework.batch.item.data.Neo4jItemWriter`
+* `org.springframework.batch.item.data.builder.Neo4jItemWriterBuilder`
+* `org.springframework.batch.item.database.support.SqlPagingQueryUtils#generateLimitGroupedSqlQuery(org.springframework.batch.item.database.support.AbstractSqlPagingQueryProvider, boolean, java.lang.String)`
+* `org.springframework.batch.core.repository.dao.JdbcJobInstanceDao#setJobIncrementer(DataFieldMaxValueIncrementer jobIncrementer)`
 
 # Removed APIs
 
-TBD
+The following APIs were deprecated in previous versions and have been removed in this release:
+
+* Class `org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean`
+* Class `org.springframework.batch.core.repository.dao.MapExecutionContextDao`
+* Class `org.springframework.batch.core.repository.dao.MapJobExecutionDao`
+* Class `org.springframework.batch.core.repository.dao.MapJobInstanceDao`
+* Class `org.springframework.batch.core.repository.dao.MapStepExecutionDao`
+* Class `org.springframework.batch.core.explore.support.MapJobExplorerFactoryBean`
+* Class `org.springframework.batch.core.repository.dao.XStreamExecutionContextStringSerializer`
+* Class `org.springframework.batch.core.configuration.support.ClassPathXmlJobRegistry`
+* Class `org.springframework.batch.core.configuration.support.ClassPathXmlApplicationContextFactory`
+* Class `org.springframework.batch.core.launch.support.ScheduledJobParametersFactory`
+* Class `org.springframework.batch.item.data.AbstractNeo4jItemReader`
+* Class `org.springframework.batch.item.database.support.ListPreparedStatementSetter`
+* Class `org.springframework.batch.integration.chunk.RemoteChunkingMasterStepBuilder`
+* Class `org.springframework.batch.integration.chunk.RemoteChunkingMasterStepBuilderFactory`
+* Class `org.springframework.batch.integration.partition.RemotePartitioningMasterStepBuilder`
+* Class `org.springframework.batch.integration.partition.RemotePartitioningMasterStepBuilderFactory`
+* Class `org.springframework.batch.test.AbstractJobTests`
+* Class `org.springframework.batch.item.xml.StaxUtils`
+* Enum `org.springframework.batch.item.file.transform.Alignment`
+* Method `org.springframework.batch.core.JobExecution#stop()`
+* Method `org.springframework.batch.core.JobParameters#getDouble(String key, double defaultValue)`
+* Method `org.springframework.batch.core.JobParameters#getLong(String key, long defaultValue)`
+* Method `org.springframework.batch.core.partition.support.SimpleStepExecutionSplitter(JobRepository jobRepository, Step step, Partitioner partitioner)`
+* Method `org.springframework.batch.core.partition.support.SimpleStepExecutionSplitter#getStartable(StepExecution stepExecution, ExecutionContext context)`
+* Method `org.springframework.batch.core.repository.support.AbstractJobRepositoryFactoryBean#getJobRepository()`
+* Method `org.springframework.batch.item.database.AbstractCursorItemReader#cleanupOnClose()`
+* Method `org.springframework.batch.item.database.HibernateItemWriter#doWrite(HibernateOperations hibernateTemplate, List<? extends T> items)`
+* Method `org.springframework.batch.item.database.JdbcCursorItemReader#cleanupOnClose()`
+* Method `org.springframework.batch.item.database.StoredProcedureItemReader#cleanupOnClose()`
+* Method `org.springframework.batch.item.database.builder.HibernatePagingItemReaderBuilder#useSatelessSession(boolean useStatelessSession)`
+* Method `org.springframework.batch.item.file.MultiResourceItemReader#getCurrentResource()`
+* Method `org.springframework.batch.integration.config.annotation.BatchIntegrationConfiguration#remoteChunkingMasterStepBuilderFactory()`
+* Method `org.springframework.batch.integration.config.annotation.BatchIntegrationConfiguration#remotePartitioningMasterStepBuilderFactory()`
+* Method `org.springframework.batch.item.util.FileUtils#setUpOutputFile(File file, boolean restarted, boolean overwriteOutputFile)`
