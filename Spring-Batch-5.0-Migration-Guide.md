@@ -40,6 +40,13 @@ New applications can use the provided script with no modifications. Existing app
 
 The Map-based job repository/explorer implementation were deprecated in v4 and completely removed in v5. You should use the Jdbc-based implementation instead. Unless you are using a custom Job repository/explorer implementation, the `@EnableBatchProcessing` annotation will configure a Jdbc-based `JobRepository` which requires a `DataSource` bean in the application context. The `DataSource` bean could refer to an embedded database like H2, HSQL, etc to work with an in-memory job repository.
 
+## Transaction manager bean exposure
+
+Up until version 4.3, the `@EnableBatchProcessing` annotation exposed a tranasaction manager bean in the application
+context. While this was convenient in many cases, the unconditional exposure of a tranasaction manager could
+interfere with a user-defined transaction manager. In this release, `@EnableBatchProcessing` does not expose a
+transaction manager bean in the application context anymore.
+
 ## Data types updates
 
 * Metric counters (`readCount`, `writeCount`, etc) in `org.springframework.batch.core.StepExecution` and `org.springframework.batch.core.StepContribution` have been changed from `int` to `long`. All getters and setters have been updated accordingly.
