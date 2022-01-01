@@ -68,6 +68,8 @@ The following APIs have been deprecated in version 5.0:
 * `org.springframework.batch.item.database.support.SqlPagingQueryUtils#generateLimitGroupedSqlQuery(org.springframework.batch.item.database.support.AbstractSqlPagingQueryProvider, boolean, java.lang.String)`
 * `org.springframework.batch.core.repository.dao.JdbcJobInstanceDao#setJobIncrementer(DataFieldMaxValueIncrementer jobIncrementer)`
 
+Please refer to the Javadoc of each API for more details about the suggested replacement.
+
 # Removed APIs
 
 The following APIs were deprecated in previous versions and have been removed in this release:
