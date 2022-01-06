@@ -17,8 +17,9 @@ Spring Batch 5 is updating its Spring dependencies across the board to the follo
 * Spring Data 3
 * Spring AMQP 3
 * Spring for Apache Kafka 3
+* Micrometer 2
 
-## DDL scripts updates
+## Database schema updates
 
 #### Oracle
 
@@ -35,6 +36,16 @@ CREATE SEQUENCE BATCH_JOB_SEQ START WITH 0 MINVALUE 0 MAXVALUE 92233720368547758
 ```
 
 New applications can use the provided script with no modifications. Existing applications should consider modifying the snippet above to start sequences from the last value in sequence tables used with v4.
+
+#### All platforms
+
+The column `JOB_CONFIGURATION_LOCATION` in the `BATCH_JOB_EXECUTION` table is not used anymore and can be marked as unused or dropped if needed:
+
+```
+ALTER TABLE BATCH_JOB_EXECUTION DROP COLUMN JOB_CONFIGURATION_LOCATION;
+```
+
+The syntax to drop the column might differ depending on the version of your database server, so please check the syntax of column deletion. This change might require a table reorganisation on some platforms.
 
 ## Job repository/explorer configuration updates
 
