@@ -19,6 +19,8 @@ Spring Batch 5 is updating its Spring dependencies across the board to the follo
 * Spring for Apache Kafka 3
 * Micrometer 2
 
+Moreover, this version marks the migration to Jakarta EE 9. Please make sure to update your import statements from `javax.*` to `jakarta.*` for all EE APIs you use.
+
 ## Database schema updates
 
 #### Oracle
