@@ -29,7 +29,7 @@ In this version, Oracle sequences are now ordered. The sequences creation script
 
 #### MS SQLServer
 
-Up until v4, the DDL script for MS SQLServer used tables to emulates sequences. In this version, this usage has been updated with real sequences:
+Up until v4, the DDL script for MS SQLServer used tables to emulate sequences. In this version, this usage has been updated with real sequences:
 
 ```sql
 CREATE SEQUENCE BATCH_STEP_EXECUTION_SEQ START WITH 0 MINVALUE 0 MAXVALUE 9223372036854775807 NO CACHE NO CYCLE;
