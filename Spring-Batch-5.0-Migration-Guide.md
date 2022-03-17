@@ -83,6 +83,10 @@ The following APIs have been deprecated in version 5.0:
 
 Please refer to the Javadoc of each API for more details about the suggested replacement.
 
+# Moved APIs
+
+* The `BatchMetrics` class (which is intended for internal use only) has been moved from `org.springframework.batch.core.metrics` to the `org.springframework.batch.core.observability` package.
+
 # Removed APIs
 
 The following APIs were deprecated in previous versions and have been removed in this release:
@@ -121,3 +125,4 @@ The following APIs were deprecated in previous versions and have been removed in
 * Method `org.springframework.batch.integration.config.annotation.BatchIntegrationConfiguration#remoteChunkingMasterStepBuilderFactory()`
 * Method `org.springframework.batch.integration.config.annotation.BatchIntegrationConfiguration#remotePartitioningMasterStepBuilderFactory()`
 * Method `org.springframework.batch.item.util.FileUtils#setUpOutputFile(File file, boolean restarted, boolean overwriteOutputFile)`
+
