@@ -49,6 +49,8 @@ ALTER TABLE BATCH_JOB_EXECUTION DROP COLUMN JOB_CONFIGURATION_LOCATION;
 
 The syntax to drop the column might differ depending on the version of your database server, so please check the syntax of column deletion. This change might require a table reorganisation on some platforms.
 
+:exclamation: Important note :exclamation: This change is mainly related to the removal of the JSR-352 implementation which was the only part of the framework using this column. As a consequence, the field `JobExecution#jobConfigurationName` has been removed as well as all APIs using it (constructors and getter in the domain object `JobExecution`, method `JobRepository#createJobExecution(JobInstance, JobParameters, String);` in `JobRepository`).
+
 ## Job repository/explorer configuration updates
 
 The Map-based job repository/explorer implementation were deprecated in v4 and completely removed in v5. You should use the Jdbc-based implementation instead. Unless you are using a custom Job repository/explorer implementation, the `@EnableBatchProcessing` annotation will configure a Jdbc-based `JobRepository` which requires a `DataSource` bean in the application context. The `DataSource` bean could refer to an embedded database like H2, HSQL, etc to work with an in-memory job repository.
@@ -126,3 +128,13 @@ The following APIs were deprecated in previous versions and have been removed in
 * Method `org.springframework.batch.integration.config.annotation.BatchIntegrationConfiguration#remotePartitioningMasterStepBuilderFactory()`
 * Method `org.springframework.batch.item.util.FileUtils#setUpOutputFile(File file, boolean restarted, boolean overwriteOutputFile)`
 
+# Pruning
+
+## SQLFire support removal
+
+SqlFire has been announced to be EOL as of November 1st, 2014. The support of SQLFire as a job repository
+was deprecated in version 4.3 and removed in version 5.0.
+
+## JSR-352 implementation removal
+
+Due to a lack of adoption, the implementation of the JSR-352 has been discontinued in this release.
