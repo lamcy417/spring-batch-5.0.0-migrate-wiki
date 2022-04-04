@@ -21,6 +21,11 @@ Spring Batch 5 is updating its Spring dependencies across the board to the follo
 
 Moreover, this version marks the migration to Jakarta EE 9. Please make sure to update your import statements from `javax.*` to `jakarta.*` for all EE APIs you use.
 
+In addition to that:
+
+* `org.springframework:spring-jdbc` is now a required dependency in `spring-batch-core`
+* `junit:junit` is now an optional dependency in `spring-batch-test`
+
 ## Database schema updates
 
 #### Oracle
