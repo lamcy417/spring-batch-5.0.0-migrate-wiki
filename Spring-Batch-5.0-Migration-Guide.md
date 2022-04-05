@@ -32,6 +32,10 @@ In addition to that:
 
 In this version, Oracle sequences are now ordered. The sequences creation script has been updated for new applications. Existing applications can use the migration script in `org/springframework/batch/core/migration/5.0/migration-oracle.sql` to alter the existing sequences.
 
+Moreover, the DDL scripts for Oracle have been renamed as follows:
+* `org/springframework/batch/core/schema-drop-oracle10g.sql` has been renamed to `org/springframework/batch/core/schema-drop-oracle.sql`
+* `org/springframework/batch/core/schema-oracle10g.sql` has been renamed to `org/springframework/batch/core/schema-oracle.sql`
+
 #### MS SQLServer
 
 Up until v4, the DDL script for MS SQLServer used tables to emulate sequences. In this version, this usage has been updated with real sequences:
