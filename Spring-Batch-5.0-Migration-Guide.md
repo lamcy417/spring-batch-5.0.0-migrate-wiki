@@ -137,6 +137,10 @@ The following APIs were deprecated in previous versions and have been removed in
 * Method `org.springframework.batch.integration.config.annotation.BatchIntegrationConfiguration#remotePartitioningMasterStepBuilderFactory()`
 * Method `org.springframework.batch.item.util.FileUtils#setUpOutputFile(File file, boolean restarted, boolean overwriteOutputFile)`
 
+Moreover, the following APIs have been removed without deprecation:
+
+* Default constructor in `org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer`. Use the constructor that accepts a `DataSource` instead, see https://github.com/spring-projects/spring-batch/wiki/Spring-Batch-5.0-Migration-Guide#job-repositoryexplorer-configuration-updates.
+
 # Pruning
 
 ## SQLFire support removal
