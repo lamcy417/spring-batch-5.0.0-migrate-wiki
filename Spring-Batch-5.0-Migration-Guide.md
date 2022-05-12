@@ -137,9 +137,10 @@ The following APIs were deprecated in previous versions and have been removed in
 * Method `org.springframework.batch.integration.config.annotation.BatchIntegrationConfiguration#remotePartitioningMasterStepBuilderFactory()`
 * Method `org.springframework.batch.item.util.FileUtils#setUpOutputFile(File file, boolean restarted, boolean overwriteOutputFile)`
 
-Moreover, the following APIs have been removed without deprecation:
+Moreover, the following APIs have been removed/updated without deprecation:
 
-* Default constructor in `org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer`. Use the constructor that accepts a `DataSource` instead, see https://github.com/spring-projects/spring-batch/wiki/Spring-Batch-5.0-Migration-Guide#job-repositoryexplorer-configuration-updates.
+* The default constructor in `org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer` has been removed. Use the constructor that accepts a `DataSource` instead, see https://github.com/spring-projects/spring-batch/wiki/Spring-Batch-5.0-Migration-Guide#job-repositoryexplorer-configuration-updates.
+* `org.springframework.batch.item.file.builder.FlatFileItemWriterBuilder#resource`, `org.springframework.batch.item.file.ResourceAwareItemWriterItemStream#setResource`, `org.springframework.batch.item.json.builder.JsonFileItemWriterBuilder#resource`, `org.springframework.batch.item.json.JsonFileItemWriter#JsonFileItemWriter`, `org.springframework.batch.item.support.AbstractFileItemWriter#setResource`, `org.springframework.batch.item.xml.builder.StaxEventItemWriterBuilder#resource` and `org.springframework.batch.item.xml.StaxEventItemWriter#setResource` have been updated to accept a `org.springframework.core.io.WritableResource` instead of a `org.springframework.core.io.Resource`. For more details about this change, please check https://github.com/spring-projects/spring-batch/issues/756
 
 # Pruning
 
