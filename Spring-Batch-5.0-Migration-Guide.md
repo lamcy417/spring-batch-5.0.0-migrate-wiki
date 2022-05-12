@@ -24,7 +24,7 @@ Moreover, this version marks the migration to Jakarta EE 9. Please make sure to 
 In addition to that:
 
 * `org.springframework:spring-jdbc` is now a required dependency in `spring-batch-core`
-* `junit:junit` is now an optional dependency in `spring-batch-test`
+* `junit:junit` (junit 4) is now an optional dependency in `spring-batch-test`
 
 ## Database schema updates
 
