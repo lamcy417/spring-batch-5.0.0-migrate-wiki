@@ -24,7 +24,7 @@ Moreover, this version marks the migration to Jakarta EE 9. Please make sure to 
 In addition to that:
 
 * `org.springframework:spring-jdbc` is now a required dependency in `spring-batch-core`
-* `junit:junit` (junit 4) is now an optional dependency in `spring-batch-test`
+* `junit:junit` (junit 4) is now an optional dependency in `spring-batch-test`. If you use `org.springframework.batch.test.AssertFile`, you will need to manually add the `junit:junit` dependency to your test classpath.
 
 ## Database schema updates
 
@@ -75,6 +75,12 @@ transaction manager bean in the application context anymore.
 
 * Metric counters (`readCount`, `writeCount`, etc) in `org.springframework.batch.core.StepExecution` and `org.springframework.batch.core.StepContribution` have been changed from `int` to `long`. All getters and setters have been updated accordingly.
 * The `skipCount` parameter in `org.springframework.batch.core.step.skip.SkipPolicy#shouldSkip` has been changed from `int` to `long`. This is related to the previous point.
+
+## Observability updates
+
+* Micrometer has been updated to version 1.10
+* All tags are now prefixed with the meter name. For example, the tags of the timer `spring.batch.job` are named `name` and `status` in version 4.x. In version 5, those tags are now named `spring.batch.job.name` and `spring.batch.job.status` respectively.
+* The `BatchMetrics` class (which is intended for internal use only) has been moved from `org.springframework.batch.core.metrics` to the `org.springframework.batch.core.observability` package.
 
 # Deprecated APIs
 
