@@ -49,7 +49,7 @@
 
 <img alt="github" src="https://raw.githubusercontent.com/wiki/spring-projects/spring-batch/images/release-process/github.png">
 
-2.6 Check uploaded jars in http://repo.spring.io/libs-release-local/
+2.6 Check uploaded jars in http://repo.spring.io/libs-milestone-local/ or http://repo.spring.io/libs-release-local/
 
 **Note: The process ends here for milestone releases**
 
