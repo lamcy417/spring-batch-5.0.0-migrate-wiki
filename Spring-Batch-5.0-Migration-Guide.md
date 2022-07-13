@@ -19,7 +19,10 @@ Spring Batch 5 is updating its Spring dependencies across the board to the follo
 * Spring for Apache Kafka 3
 * Micrometer 1.10
 
-Moreover, this version marks the migration to Jakarta EE 9. Please make sure to update your import statements from `javax.*` to `jakarta.*` for all EE APIs you use.
+Moreover, this version marks the migration to:
+
+* Jakarta EE 9: Please make sure to update your import statements from `javax.*` to `jakarta.*` for all EE APIs you use.
+* Hibernate 6: Hibernate (cursor/paging) item readers and writer have been updated to use Hibernate 6.1 APIs (previously using Hibernate 5.6 APIs)
 
 In addition to that:
 
