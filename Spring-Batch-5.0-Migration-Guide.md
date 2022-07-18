@@ -63,16 +63,22 @@ The syntax to drop the column might differ depending on the version of your data
 
 :exclamation: Important note :exclamation: This change is mainly related to the removal of the JSR-352 implementation which was the only part of the framework using this column. As a consequence, the field `JobExecution#jobConfigurationName` has been removed as well as all APIs using it (constructors and getter in the domain object `JobExecution`, method `JobRepository#createJobExecution(JobInstance, JobParameters, String);` in `JobRepository`).
 
-## Job repository/explorer configuration updates
+## Infrastructure beans configuration with `@EnableBatchBatchProcessing`
+
+### Job repository/explorer configuration updates
 
 The Map-based job repository/explorer implementation were deprecated in v4 and completely removed in v5. You should use the Jdbc-based implementation instead. Unless you are using a custom Job repository/explorer implementation, the `@EnableBatchProcessing` annotation will configure a Jdbc-based `JobRepository` which requires a `DataSource` bean in the application context. The `DataSource` bean could refer to an embedded database like H2, HSQL, etc to work with an in-memory job repository.
 
-## Transaction manager bean exposure
+### Transaction manager bean exposure
 
 Up until version 4.3, the `@EnableBatchProcessing` annotation exposed a tranasaction manager bean in the application
 context. While this was convenient in many cases, the unconditional exposure of a tranasaction manager could
 interfere with a user-defined transaction manager. In this release, `@EnableBatchProcessing` does not expose a
 transaction manager bean in the application context anymore.
+
+### Default transaction manager type
+
+When no transaction manager is specified, `@EnableBatchProcessing` used (up to version 4.3) to register a default transaction manager of type `org.springframework.jdbc.datasource.DataSourceTransactionManager` in the proxy around `JobRepository` when a `DataSource` bean is registered in the application context. In this release, the type of the default transaction manager has changed to `org.springframework.jdbc.support.JdbcTransactionManage`.
 
 ## Data types updates
 
