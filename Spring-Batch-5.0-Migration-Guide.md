@@ -106,6 +106,7 @@ The following APIs have been deprecated in version 5.0:
 * `org.springframework.batch.item.data.builder.Neo4jItemWriterBuilder`
 * `org.springframework.batch.item.database.support.SqlPagingQueryUtils#generateLimitGroupedSqlQuery(org.springframework.batch.item.database.support.AbstractSqlPagingQueryProvider, boolean, java.lang.String)`
 * `org.springframework.batch.core.repository.dao.JdbcJobInstanceDao#setJobIncrementer(DataFieldMaxValueIncrementer jobIncrementer)`
+* `org.springframework.batch.core.launch.support.SimpleJobLauncher`
 
 Please refer to the Javadoc of each API for more details about the suggested replacement.
 
