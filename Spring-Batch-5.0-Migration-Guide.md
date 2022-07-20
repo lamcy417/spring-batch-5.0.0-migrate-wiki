@@ -78,7 +78,7 @@ transaction manager bean in the application context anymore.
 
 ### Default transaction manager type
 
-When no transaction manager is specified, `@EnableBatchProcessing` used (up to version 4.3) to register a default transaction manager of type `org.springframework.jdbc.datasource.DataSourceTransactionManager` in the proxy around `JobRepository` when a `DataSource` bean is registered in the application context. In this release, the type of the default transaction manager has changed to `org.springframework.jdbc.support.JdbcTransactionManage`.
+When no transaction manager is specified, `@EnableBatchProcessing` used (up to version 4.3) to register a default transaction manager of type `org.springframework.jdbc.datasource.DataSourceTransactionManager` in the proxy around `JobRepository` when a `DataSource` bean is defined in the application context. In this release, the type of the default transaction manager has changed to `org.springframework.jdbc.support.JdbcTransactionManager`.
 
 ## Data types updates
 
