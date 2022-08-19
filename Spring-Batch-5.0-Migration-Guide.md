@@ -113,6 +113,7 @@ Please refer to the Javadoc of each API for more details about the suggested rep
 # Moved APIs
 
 * The `BatchMetrics` class (which is intended for internal use only) has been moved from `org.springframework.batch.core.metrics` to the `org.springframework.batch.core.observability` package.
+* The `Chunk` class was moved from the `org.springframework.batch.core.step.item` package (`spring-batch-core` module) to the `org.springframework.batch.item` package (`spring-batch-infrastrucutre` module)
 
 # Removed APIs
 
@@ -159,6 +160,12 @@ Moreover, the following APIs have been removed/updated without deprecation:
 * The method `org.springframework.batch.core.step.builder.SimpleStepBuilder#processor(Function)` has been removed to allow lambdas to be passed as item processors. See https://github.com/spring-projects/spring-batch/issues/4061 for more details about the rationale behind this removal. If you use an actual `Function`  as argument for `SimpleStepBuilder::processor`, then you can change that to `.processor(function::apply)` to migrate to v5.
 * `org.springframework.batch.item.file.builder.FlatFileItemWriterBuilder#resource`, `org.springframework.batch.item.file.ResourceAwareItemWriterItemStream#setResource`, `org.springframework.batch.item.json.builder.JsonFileItemWriterBuilder#resource`, `org.springframework.batch.item.json.JsonFileItemWriter#JsonFileItemWriter`, `org.springframework.batch.item.support.AbstractFileItemWriter#setResource`, `org.springframework.batch.item.xml.builder.StaxEventItemWriterBuilder#resource` and `org.springframework.batch.item.xml.StaxEventItemWriter#setResource` have been updated to accept a `org.springframework.core.io.WritableResource` instead of a `org.springframework.core.io.Resource`. For more details about this change, please check https://github.com/spring-projects/spring-batch/issues/756
 * The static type `org.springframework.batch.item.data.builder.RepositoryItemReaderBuilder.RepositoryMethodReference` along with the method `org.springframework.batch.item.data.builder.RepositoryItemReaderBuilder#repository(RepositoryMethodReference<?>)` have been removed.
+* The signature of the method `ItemWriter#write(List)` was changed to `ItemWriter#write(Chunk)`
+* All implementations of `ItemWriter` were updated to use the `Chunk` API instead of `List`
+* All methods in the `ItemWriteListener` interface were updated to use the `Chunk` API instead of `List`
+* All implementations of `ItemWriteListener` were updated to use the `Chunk` API instead of `List`
+* The constructor of `ChunkRequest` was changed to accept a `Chunk` instead of a `Collection` of items
+* The return type of `ChunkRequest#getItems()` was changed from `List` to `Chunk`
 
 # Pruning
 
