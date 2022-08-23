@@ -166,6 +166,7 @@ Moreover, the following APIs have been removed/updated without deprecation:
 * All implementations of `ItemWriteListener` were updated to use the `Chunk` API instead of `List`
 * The constructor of `ChunkRequest` was changed to accept a `Chunk` instead of a `Collection` of items
 * The return type of `ChunkRequest#getItems()` was changed from `List` to `Chunk`
+* The `JobRepositoryTestUtils` was changed to work against the `JobRepository` interface without depending on a datasource bean. For this change, the constructor that takes a `DataSource` as a parameter (`JobRepositoryTestUtils(JobRepository jobRepository, DataSource dataSource)`) as well as the public `DataSource` setter were removed. This is related to issue #4070.
 
 # Pruning
 
