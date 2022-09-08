@@ -27,7 +27,7 @@ Moreover, this version marks the migration to:
 In addition to that:
 
 * `org.springframework:spring-jdbc` is now a required dependency in `spring-batch-core`
-* `junit:junit` (junit 4) is now an optional dependency in `spring-batch-test`. If you use `org.springframework.batch.test.AssertFile`, you will need to manually add the `junit:junit` dependency to your test classpath.
+* `junit:junit` is no more a required dependency in `spring-batch-test`.
 
 ## Database schema updates
 
