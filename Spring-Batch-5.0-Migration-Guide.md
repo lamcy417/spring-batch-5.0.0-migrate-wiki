@@ -69,12 +69,36 @@ The syntax to drop the column might differ depending on the version of your data
 
 The Map-based job repository/explorer implementation were deprecated in v4 and completely removed in v5. You should use the Jdbc-based implementation instead. Unless you are using a custom Job repository/explorer implementation, the `@EnableBatchProcessing` annotation will configure a Jdbc-based `JobRepository` which requires a `DataSource` bean in the application context. The `DataSource` bean could refer to an embedded database like H2, HSQL, etc to work with an in-memory job repository.
 
-### Transaction manager bean exposure
+### Transaction manager bean exposure/configuration
 
 Up until version 4.3, the `@EnableBatchProcessing` annotation exposed a tranasaction manager bean in the application
 context. While this was convenient in many cases, the unconditional exposure of a tranasaction manager could
 interfere with a user-defined transaction manager. In this release, `@EnableBatchProcessing` does not expose a
-transaction manager bean in the application context anymore.
+transaction manager bean in the application context anymore. This change is related to issue https://github.com/spring-projects/spring-batch/issues/816.
+
+As a result of the aforementioned issue, and in combination with the inconsistency between the XML and Java config styles regarding the transaction manager that was fixed in https://github.com/spring-projects/spring-batch/issues/4130, it is now required to manually configure the transaction manager on any tasklet step definition. The method `StepBuilderHelper#transactionManager(PlatformTransactionManager)` was moved down a level, to `AbstractTaskletStepBuilder`.
+
+The typical migration path from v4 to v5 in that regard is as follows:
+
+```
+@EnableBatchProcessing
+public class MyStepConfig {
+
+    @Autowired
+    private StepBuilderFactory stepBuilderFactory;
+
+    @Bean
+    public Step myStep(PlatformTransactionManager transactionManager) {
+        return this.stepBuilderFactory.get("myStep")
+                .tasklet(..) // or .chunk()
+                .transactionManager(transactionManager) // optional in v4, required in v5+
+                .build();
+    }
+
+}
+```
+
+This is only required for tasklet steps, other step types do not require a transaction manager by design.
 
 ### Default transaction manager type
 
@@ -167,6 +191,8 @@ Moreover, the following APIs have been removed/updated without deprecation:
 * The constructor of `ChunkRequest` was changed to accept a `Chunk` instead of a `Collection` of items
 * The return type of `ChunkRequest#getItems()` was changed from `List` to `Chunk`
 * The `JobRepositoryTestUtils` was changed to work against the `JobRepository` interface without depending on a datasource bean. For this change, the constructor that takes a `DataSource` as a parameter (`JobRepositoryTestUtils(JobRepository jobRepository, DataSource dataSource)`) as well as the public `DataSource` setter were removed. This is related to issue #4070.
+* The method `StepBuilderHelper#transactionManager(PlatformTransactionManager)` was moved to `AbstractTaskletStepBuilder`. This is related to issue https://github.com/spring-projects/spring-batch/issues/4130.
+* The methods `RemotePartitioningManagerStepBuilder#transactionManager(PlatformTransactionManager)` and `RemotePartitioningWorkerStepBuilder#transactionManager(PlatformTransactionManager)` were removed. A transaction manager is not required for those type of steps. This is related to issue https://github.com/spring-projects/spring-batch/issues/4130.
 
 # Pruning
 
