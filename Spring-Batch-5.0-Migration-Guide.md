@@ -81,6 +81,7 @@ As a result of the aforementioned issue, and in combination with the inconsisten
 The typical migration path from v4 to v5 in that regard is as follows:
 
 ```
+@Configuration
 @EnableBatchProcessing
 public class MyStepConfig {
 
@@ -99,6 +100,53 @@ public class MyStepConfig {
 ```
 
 This is only required for tasklet steps, other step types do not require a transaction manager by design.
+
+### JobBuilderFactory and StepBuilderFactory bean exposure/configuration
+
+`JobBuilderFactory` and `StepBuilderFactory` are not exposed as beans in the application context anymore, and are now deprecated for removal in v5.2 in favor of using the respective builders they create.
+
+The typical migration path from v4 to v5 in that regard is as follows:
+
+```
+// Sample with v4
+@Configuration
+@EnableBatchProcessing
+public class MyJobConfig {
+
+    @Autowired
+    private JobBuilderFactory jobBuilderFactory;
+
+    @Bean
+    public Job myJob(Step step) {
+        return this.jobBuilderFactory.get("myJob")
+                .start(step)
+                .build();
+    }
+
+}
+```
+
+```
+// Sample with v5
+@Configuration
+@EnableBatchProcessing
+public class MyJobConfig {
+
+    @Autowired
+    private JobRepository jobRepository;
+
+    @Bean
+    public Job myJob(Step step) {
+        return new JobBuilder("myJob")
+                .repository(this.jobRepository)
+                .start(step)
+                .build();
+    }
+
+}
+```
+
+The same pattern can be used to remove the usage of the deprecated `StepBuilderFactory`. For more details about this change, please check https://github.com/spring-projects/spring-batch/issues/4188.
 
 ### Default transaction manager type
 
