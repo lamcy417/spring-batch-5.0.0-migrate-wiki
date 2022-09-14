@@ -101,6 +101,8 @@ public class MyStepConfig {
 
 This is only required for tasklet steps, other step types do not require a transaction manager by design.
 
+Moreover, the transaction manager was configurable by implementing `BatchConfigurer#getTransactionManager`. The transaction manager being an implementation detail of the `JobRepository`, it should not be configurable at the same level as the `JobRepository` (ie in the same interface). In this release, the method `getTransactionManager` was removed from the `BatchConfigurer` interface. If needed, a custom transaction manager could be supplied via the constructor of `DefaultBatchConfigurer` or by implementing `getJobRepository`. For more details about this change, please check https://github.com/spring-projects/spring-batch/issues/4191.
+
 ### JobBuilderFactory and StepBuilderFactory bean exposure/configuration
 
 `JobBuilderFactory` and `StepBuilderFactory` are not exposed as beans in the application context anymore, and are now deprecated for removal in v5.2 in favor of using the respective builders they create.
@@ -150,7 +152,7 @@ The same pattern can be used to remove the usage of the deprecated `StepBuilderF
 
 ### Default transaction manager type
 
-When no transaction manager is specified, `@EnableBatchProcessing` used (up to version 4.3) to register a default transaction manager of type `org.springframework.jdbc.datasource.DataSourceTransactionManager` in the proxy around `JobRepository` when a `DataSource` bean is defined in the application context. In this release, the type of the default transaction manager has changed to `org.springframework.jdbc.support.JdbcTransactionManager`.
+When no transaction manager is specified, `@EnableBatchProcessing` used to register a default transaction manager of type `org.springframework.jdbc.datasource.DataSourceTransactionManager` in the proxy around `JobRepository` when a `DataSource` bean is defined in the application context. In this release, the type of the default transaction manager has changed to `org.springframework.jdbc.support.JdbcTransactionManager`.
 
 ## Data types updates
 
