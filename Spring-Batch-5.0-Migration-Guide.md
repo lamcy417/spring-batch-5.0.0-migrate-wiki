@@ -81,6 +81,7 @@ As a result of the aforementioned issue, and in combination with the inconsisten
 The typical migration path from v4 to v5 in that regard is as follows:
 
 ```
+// Sample with v4
 @Configuration
 @EnableBatchProcessing
 public class MyStepConfig {
@@ -92,7 +93,22 @@ public class MyStepConfig {
     public Step myStep(PlatformTransactionManager transactionManager) {
         return this.stepBuilderFactory.get("myStep")
                 .tasklet(..) // or .chunk()
-                .transactionManager(transactionManager) // optional in v4, required in v5+
+                .build();
+    }
+
+}
+```
+
+```
+// Sample with v5
+@Configuration
+@EnableBatchProcessing
+public class MyStepConfig {
+
+    @Bean
+    public Step myStep(JobRepository jobRepository, Tasklet myTasklet, PlatformTransactionManager transactionManager) {
+        return new StepBuilder("myStep", jobRepository)
+                .tasklet(myTasklet, transactionManager)
                 .build();
     }
 
@@ -101,7 +117,7 @@ public class MyStepConfig {
 
 This is only required for tasklet steps, other step types do not require a transaction manager by design.
 
-Moreover, the transaction manager was configurable by implementing `BatchConfigurer#getTransactionManager`. The transaction manager being an implementation detail of the `JobRepository`, it should not be configurable at the same level as the `JobRepository` (ie in the same interface). In this release, the method `getTransactionManager` was removed from the `BatchConfigurer` interface. If needed, a custom transaction manager could be supplied via the constructor of `DefaultBatchConfigurer` or by implementing `getJobRepository`. For more details about this change, please check https://github.com/spring-projects/spring-batch/issues/4191.
+Moreover, the transaction manager was configurable by implementing `BatchConfigurer#getTransactionManager`. The transaction manager being an implementation detail of the `JobRepository`, it should not be configurable at the same level as the `JobRepository` (ie in the same interface). In this release, the `BatchConfigurer` interface was removed. If needed, a custom transaction manager could be supplied either declaratively as an attribute of `@EnableBatchProcessing`, or programmatically by overriding `DefaultBatchConfiguration#getTransactionManager()`. For more details about this change, please check https://github.com/spring-projects/spring-batch/issues/3942.
 
 ### JobBuilderFactory and StepBuilderFactory bean exposure/configuration
 
@@ -134,13 +150,9 @@ public class MyJobConfig {
 @EnableBatchProcessing
 public class MyJobConfig {
 
-    @Autowired
-    private JobRepository jobRepository;
-
     @Bean
-    public Job myJob(Step step) {
-        return new JobBuilder("myJob")
-                .repository(this.jobRepository)
+    public Job myJob(JobRepository jobRepository, Step step) {
+        return new JobBuilder("myJob", jobRepository)
                 .start(step)
                 .build();
     }
@@ -149,10 +161,6 @@ public class MyJobConfig {
 ```
 
 The same pattern can be used to remove the usage of the deprecated `StepBuilderFactory`. For more details about this change, please check https://github.com/spring-projects/spring-batch/issues/4188.
-
-### Default transaction manager type
-
-When no transaction manager is specified, `@EnableBatchProcessing` used to register a default transaction manager of type `org.springframework.jdbc.datasource.DataSourceTransactionManager` in the proxy around `JobRepository` when a `DataSource` bean is defined in the application context. In this release, the type of the default transaction manager has changed to `org.springframework.jdbc.support.JdbcTransactionManager`.
 
 ## Data types updates
 
@@ -183,6 +191,18 @@ The following APIs have been deprecated in version 5.0:
 * `org.springframework.batch.core.launch.support.SimpleJobLauncher`
 * `org.springframework.batch.core.configuration.annotation.JobBuilderFactory`
 * `org.springframework.batch.core.configuration.annotation.StepBuilderFactory`
+* The constructor `org.springframework.batch.core.job.builder.JobBuilder#JobBuilder(java.lang.String)`
+* The constructor `org.springframework.batch.core.step.builder.StepBuilder#StepBuilder(java.lang.String)`
+* The method `org.springframework.batch.core.step.builder.StepBuilder#tasklet(org.springframework.batch.core.step.tasklet.Tasklet)`
+* The method `org.springframework.batch.core.step.builder.StepBuilder#chunk(int)`
+* The method `org.springframework.batch.core.step.builder.StepBuilder#chunk(org.springframework.batch.repeat.CompletionPolicy)`
+* The method `org.springframework.batch.core.step.builder.TaskletStepBuilder#tasklet(org.springframework.batch.core.step.tasklet.Tasklet)`
+* The constructor `org.springframework.batch.integration.chunk.RemoteChunkingManagerStepBuilder#RemoteChunkingManagerStepBuilder(java.lang.String)`
+* The constructor `org.springframework.batch.integration.partition.RemotePartitioningManagerStepBuilder#RemotePartitioningManagerStepBuilder(java.lang.String)`
+* The constructor `org.springframework.batch.integration.partition.RemotePartitioningWorkerStepBuilder#RemotePartitioningWorkerStepBuilder(java.lang.String)`
+* The method `org.springframework.batch.integration.partition.RemotePartitioningWorkerStepBuilder#tasklet(org.springframework.batch.core.step.tasklet.Tasklet)`
+* The method `org.springframework.batch.integration.partition.RemotePartitioningWorkerStepBuilder#chunk(int)`
+* The method `org.springframework.batch.integration.partition.RemotePartitioningWorkerStepBuilder#chunk(org.springframework.batch.repeat.CompletionPolicy)`
 
 Please refer to the Javadoc of each API for more details about the suggested replacement.
 
@@ -190,6 +210,7 @@ Please refer to the Javadoc of each API for more details about the suggested rep
 
 * The `BatchMetrics` class (which is intended for internal use only) has been moved from `org.springframework.batch.core.metrics` to the `org.springframework.batch.core.observability` package.
 * The `Chunk` class was moved from the `org.springframework.batch.core.step.item` package (`spring-batch-core` module) to the `org.springframework.batch.item` package (`spring-batch-infrastrucutre` module)
+* The `ScopeConfiguration` class has moved from `org.springframework.batch.core.configuration.annotation` to `org.springframework.batch.core.configuration.support`
 
 # Removed APIs
 
@@ -232,7 +253,8 @@ The following APIs were deprecated in previous versions and have been removed in
 
 Moreover, the following APIs have been removed/updated without deprecation:
 
-* The default constructor in `org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer` has been removed. Use the constructor that accepts a `DataSource` instead, see https://github.com/spring-projects/spring-batch/wiki/Spring-Batch-5.0-Migration-Guide#job-repositoryexplorer-configuration-updates.
+* The interface `org.springframework.batch.core.configuration.annotation.BatchConfigurer` was removed. See https://github.com/spring-projects/spring-batch/issues/3942
+* The class `org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer` was removed. See https://github.com/spring-projects/spring-batch/issues/3942
 * The method `org.springframework.batch.core.step.builder.SimpleStepBuilder#processor(Function)` has been removed to allow lambdas to be passed as item processors. See https://github.com/spring-projects/spring-batch/issues/4061 for more details about the rationale behind this removal. If you use an actual `Function`  as argument for `SimpleStepBuilder::processor`, then you can change that to `.processor(function::apply)` to migrate to v5.
 * `org.springframework.batch.item.file.builder.FlatFileItemWriterBuilder#resource`, `org.springframework.batch.item.file.ResourceAwareItemWriterItemStream#setResource`, `org.springframework.batch.item.json.builder.JsonFileItemWriterBuilder#resource`, `org.springframework.batch.item.json.JsonFileItemWriter#JsonFileItemWriter`, `org.springframework.batch.item.support.AbstractFileItemWriter#setResource`, `org.springframework.batch.item.xml.builder.StaxEventItemWriterBuilder#resource` and `org.springframework.batch.item.xml.StaxEventItemWriter#setResource` have been updated to accept a `org.springframework.core.io.WritableResource` instead of a `org.springframework.core.io.Resource`. For more details about this change, please check https://github.com/spring-projects/spring-batch/issues/756
 * The static type `org.springframework.batch.item.data.builder.RepositoryItemReaderBuilder.RepositoryMethodReference` along with the method `org.springframework.batch.item.data.builder.RepositoryItemReaderBuilder#repository(RepositoryMethodReference<?>)` have been removed.
