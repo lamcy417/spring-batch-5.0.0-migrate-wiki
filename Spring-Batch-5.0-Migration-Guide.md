@@ -90,7 +90,7 @@ public class MyStepConfig {
     private StepBuilderFactory stepBuilderFactory;
 
     @Bean
-    public Step myStep(PlatformTransactionManager transactionManager) {
+    public Step myStep() {
         return this.stepBuilderFactory.get("myStep")
                 .tasklet(..) // or .chunk()
                 .build();
