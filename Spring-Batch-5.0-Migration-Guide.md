@@ -53,6 +53,8 @@ New applications can use the provided script with no modifications. Existing app
 
 #### All platforms
 
+##### Removal of `BATCH_JOB_EXECUTION#JOB_CONFIGURATION_LOCATION` column
+
 The column `JOB_CONFIGURATION_LOCATION` in the `BATCH_JOB_EXECUTION` table is not used anymore and can be marked as unused or dropped if needed:
 
 ```
@@ -62,6 +64,30 @@ ALTER TABLE BATCH_JOB_EXECUTION DROP COLUMN JOB_CONFIGURATION_LOCATION;
 The syntax to drop the column might differ depending on the version of your database server, so please check the syntax of column deletion. This change might require a table reorganisation on some platforms.
 
 :exclamation: Important note :exclamation: This change is mainly related to the removal of the JSR-352 implementation which was the only part of the framework using this column. As a consequence, the field `JobExecution#jobConfigurationName` has been removed as well as all APIs using it (constructors and getter in the domain object `JobExecution`, method `JobRepository#createJobExecution(JobInstance, JobParameters, String);` in `JobRepository`).
+
+##### Column change in `BATCH_JOB_EXECUTION_PARAMS`
+
+The `BATCH_JOB_EXECUTION_PARAMS` has been updated as follows:
+
+```diff
+CREATE TABLE BATCH_JOB_EXECUTION_PARAMS  (
+	JOB_EXECUTION_ID BIGINT NOT NULL ,
+---	TYPE_CD VARCHAR(6) NOT NULL ,
+---	KEY_NAME VARCHAR(100) NOT NULL ,
+---	STRING_VAL VARCHAR(250) ,
+---	DATE_VAL DATETIME(6) DEFAULT NULL ,
+---	LONG_VAL BIGINT ,
+---	DOUBLE_VAL DOUBLE PRECISION ,
++++	NAME VARCHAR(100) NOT NULL ,
++++	TYPE VARCHAR(100) NOT NULL ,
++++	VALUE VARCHAR(2500) ,
+	IDENTIFYING CHAR(1) NOT NULL ,
+	constraint JOB_EXEC_PARAMS_FK foreign key (JOB_EXECUTION_ID)
+	references BATCH_JOB_EXECUTION(JOB_EXECUTION_ID)
+);
+```
+
+This is related to the way job parameters are persisted as revisited in https://github.com/spring-projects/spring-batch/issues/3960. Migration scripts can be found in `org/springframework/batch/core/migration/5.0`.
 
 ## Infrastructure beans configuration with `@EnableBatchBatchProcessing`
 
