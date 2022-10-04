@@ -199,6 +199,61 @@ The same pattern can be used to remove the usage of the deprecated `StepBuilderF
 * All tags are now prefixed with the meter name. For example, the tags of the timer `spring.batch.job` are named `name` and `status` in version 4.x. In version 5, those tags are now named `spring.batch.job.name` and `spring.batch.job.status` respectively.
 * The `BatchMetrics` class (which is intended for internal use only) has been moved from `org.springframework.batch.core.metrics` to the `org.springframework.batch.core.observability` package.
 
+## Job parameters handling updates
+
+### Support for any type as a job parameter
+
+This change adds support to use any type as a job parameter, and not only the 4 pre-defined types (long, double, string, date) as in v4. The main change in the following:
+
+```diff
+---public class JobParameter implements Serializable {
++++public class JobParameter<T> implements Serializable {
+
+---   private Object parameter;
++++   private T value;
+
+---   private ParameterType parameterType;
++++   private Class<T> type;
+
+}
+```
+
+With this revision, the `JobParameter` can be of any type. This change required many API changes like changing the return type of `getType()`, or the removal of the `ParameterType` enum. All changes related to this update can be found in the "[Deprecated|Moved|Removed] APIs" sections.
+
+This change had an impact on how job parameters are persisted in the database (There are no more 4 distinct columns for each predefined type). Please check [Column change in BATCH_JOB_EXECUTION_PARAMS](https://github.com/spring-projects/spring-batch/wiki/Spring-Batch-5.0-Migration-Guide#column-change-in-batch_job_execution_params) for DDL changes. The fully qualified name of the type of the parameter is now persisted as a `String`, as well as the parameter value. String literals are converted to the parameter type with the standard Spring conversion service. The standard conversion service can be enriched with any required converter to convert user specific type to and from String literals.
+
+### Default job parameter conversion
+
+The default notation of job parameters in v4 was specified as follows:
+
+```
+[+|-]parameterName(parameterType)=value
+```
+
+where `parameterType` is one of [string,long,double,date]. In addition to be limited and constraining, this notation caused several issues as described in https://github.com/spring-projects/spring-batch/issues/3960.
+
+In v5, there are two way to specify job parameters:
+
+#### Default notation
+
+The default notation is specified as follows:
+
+```
+parameterName=parameterValue,parameterType,identificationFlag
+```
+
+where `parameterType` is the fully qualified name of the type of the parameter. Spring Batch provides the `DefaultJobParametersConverter` to support this notation.
+
+#### Extended notation
+
+While the default notation is well suited for the majority of use cases, it might be inconvenient when the value contains a comma for example. In this case, the extended notation can be used, which is inspired by Spring Boot's [Json Application Properties](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config.application-json) and specified as follows:
+
+```
+parameterName='{"value": "parameterValue", "type":"parameterType", "identifying": "booleanValue"}'
+```
+
+where `parameterType` is the fully qualified name of the type of the parameter. Spring Batch provides the `JsonJobParametersConverter` to support this notation.
+
 # Deprecated APIs
 
 The following APIs have been deprecated in version 5.0:
@@ -229,6 +284,8 @@ The following APIs have been deprecated in version 5.0:
 * The method `org.springframework.batch.integration.partition.RemotePartitioningWorkerStepBuilder#tasklet(org.springframework.batch.core.step.tasklet.Tasklet)`
 * The method `org.springframework.batch.integration.partition.RemotePartitioningWorkerStepBuilder#chunk(int)`
 * The method `org.springframework.batch.integration.partition.RemotePartitioningWorkerStepBuilder#chunk(org.springframework.batch.repeat.CompletionPolicy)`
+* The method `org.springframework.batch.core.JobParameters#toProperties`
+* The method `org.springframework.batch.core.JobParametersBuilder#addParameter`
 
 Please refer to the Javadoc of each API for more details about the suggested replacement.
 
@@ -261,6 +318,7 @@ The following APIs were deprecated in previous versions and have been removed in
 * Class `org.springframework.batch.test.AbstractJobTests`
 * Class `org.springframework.batch.item.xml.StaxUtils`
 * Enum `org.springframework.batch.item.file.transform.Alignment`
+* Enum `org.springframework.batch.core.JobParameter#ParameterType`
 * Method `org.springframework.batch.core.JobExecution#stop()`
 * Method `org.springframework.batch.core.JobParameters#getDouble(String key, double defaultValue)`
 * Method `org.springframework.batch.core.JobParameters#getLong(String key, long defaultValue)`
@@ -293,6 +351,8 @@ Moreover, the following APIs have been removed/updated without deprecation:
 * The `JobRepositoryTestUtils` was changed to work against the `JobRepository` interface without depending on a datasource bean. For this change, the constructor that takes a `DataSource` as a parameter (`JobRepositoryTestUtils(JobRepository jobRepository, DataSource dataSource)`) as well as the public `DataSource` setter were removed. This is related to issue #4070.
 * The method `StepBuilderHelper#transactionManager(PlatformTransactionManager)` was moved to `AbstractTaskletStepBuilder`. This is related to issue https://github.com/spring-projects/spring-batch/issues/4130.
 * The methods `RemotePartitioningManagerStepBuilder#transactionManager(PlatformTransactionManager)` and `RemotePartitioningWorkerStepBuilder#transactionManager(PlatformTransactionManager)` were removed. A transaction manager is not required for those type of steps. This is related to issue https://github.com/spring-projects/spring-batch/issues/4130.
+* The method `JobParameter#getType` now return `T` instead of `Object`
+* The constructors in `JobParameter` that took the 4 pre-defined job parameter types (date, string, long, double) where removed.
 
 # Pruning
 
