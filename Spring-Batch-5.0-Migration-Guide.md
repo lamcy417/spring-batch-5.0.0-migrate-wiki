@@ -351,7 +351,7 @@ Moreover, the following APIs have been removed/updated without deprecation:
 * The `JobRepositoryTestUtils` was changed to work against the `JobRepository` interface without depending on a datasource bean. For this change, the constructor that takes a `DataSource` as a parameter (`JobRepositoryTestUtils(JobRepository jobRepository, DataSource dataSource)`) as well as the public `DataSource` setter were removed. This is related to issue #4070.
 * The method `StepBuilderHelper#transactionManager(PlatformTransactionManager)` was moved to `AbstractTaskletStepBuilder`. This is related to issue https://github.com/spring-projects/spring-batch/issues/4130.
 * The methods `RemotePartitioningManagerStepBuilder#transactionManager(PlatformTransactionManager)` and `RemotePartitioningWorkerStepBuilder#transactionManager(PlatformTransactionManager)` were removed. A transaction manager is not required for those type of steps. This is related to issue https://github.com/spring-projects/spring-batch/issues/4130.
-* The method `JobParameter#getType` now return `T` instead of `Object`
+* The method `JobParameter#getType` now returns `T` instead of `Object`
 * The constructors in `JobParameter` that took the 4 pre-defined job parameter types (date, string, long, double) where removed.
 
 # Pruning
