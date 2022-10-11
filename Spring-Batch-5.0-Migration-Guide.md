@@ -192,6 +192,7 @@ The same pattern can be used to remove the usage of the deprecated `StepBuilderF
 
 * Metric counters (`readCount`, `writeCount`, etc) in `org.springframework.batch.core.StepExecution` and `org.springframework.batch.core.StepContribution` have been changed from `int` to `long`. All getters and setters have been updated accordingly.
 * The `skipCount` parameter in `org.springframework.batch.core.step.skip.SkipPolicy#shouldSkip` has been changed from `int` to `long`. This is related to the previous point.
+* The type of fields `startTime`, `endTime`, `createTime` and `lastUpdateTime` in `JobExecution` and `StepExecution` was changed from  `java.util.Date` to `java.time.LocalDateTime`.
 
 ## Observability updates
 
