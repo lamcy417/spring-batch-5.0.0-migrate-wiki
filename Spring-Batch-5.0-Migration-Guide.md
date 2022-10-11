@@ -28,6 +28,7 @@ In addition to that:
 
 * `org.springframework:spring-jdbc` is now a required dependency in `spring-batch-core`
 * `junit:junit` is no more a required dependency in `spring-batch-test`.
+* `com.fasterxml.jackson.core:jackson-core` is now optional in `spring-batch-core`
 
 ## Database schema updates
 
@@ -199,6 +200,12 @@ The same pattern can be used to remove the usage of the deprecated `StepBuilderF
 * Micrometer has been updated to version 1.10
 * All tags are now prefixed with the meter name. For example, the tags of the timer `spring.batch.job` are named `name` and `status` in version 4.x. In version 5, those tags are now named `spring.batch.job.name` and `spring.batch.job.status` respectively.
 * The `BatchMetrics` class (which is intended for internal use only) has been moved from `org.springframework.batch.core.metrics` to the `org.springframework.batch.core.observability` package.
+
+## Execution context serialization updates
+
+Starting from v5, the default `ExecutionContextSerializer` was changed from `JacksonExecutionContextStringSerializer` to `DefaultExecutionContextSerializer`. The default execution context serializer was updated to serialize/deserialize the context to/from Base64.
+
+The dependency to Jackson was made optional. In order to use the `JacksonExecutionContextStringSerializer`, `jackson-core` should be added to the classpath.
 
 ## Job parameters handling updates
 
