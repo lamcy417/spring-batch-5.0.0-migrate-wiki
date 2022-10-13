@@ -207,6 +207,14 @@ Starting from v5, the default `ExecutionContextSerializer` was changed from `Jac
 
 The dependency to Jackson was made optional. In order to use the `JacksonExecutionContextStringSerializer`, `jackson-core` should be added to the classpath.
 
+## SystemCommandTasklet updates
+
+The `SystemCommandTasklet` has been revisited in this release and was changed as follows:
+
+* A new strategy interface named `CommandRunner` was introduced in order to decouple the command execution from the tasklet execution. The default implementation is the `JvmCommandRunner` which uses the `java.lang.Runtime#exec` API to run system commands. This interface can be implemented to use any other API to run system commands.
+
+* The method that runs the command now accepts an array of `String`s representing the command and its arguments. There is no need anymore to tokenize the command or do any pre-processing. This change makes the API more intuitive, and less prone to errors.
+
 ## Job parameters handling updates
 
 ### Support for any type as a job parameter
