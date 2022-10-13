@@ -302,6 +302,17 @@ The following APIs have been deprecated in version 5.0:
 * The method `org.springframework.batch.integration.partition.RemotePartitioningWorkerStepBuilder#chunk(org.springframework.batch.repeat.CompletionPolicy)`
 * The method `org.springframework.batch.core.JobParameters#toProperties`
 * The method `org.springframework.batch.core.JobParametersBuilder#addParameter`
+* The class `org.springframework.batch.core.launch.support.JobRegistryBackgroundJobRunner`
+* The class `org.springframework.batch.test.DataSourceInitializer`
+* The class `org.springframework.batch.integration.step.DelegateStep`
+* The annotation `org.springframework.batch.support.annotation.Classifier`
+* The class `org.springframework.batch.item.ItemStreamSupport`
+* The method `org.springframework.batch.core.step.builder.AbstractTaskletStepBuilder#throttleLimit`
+* The method `org.springframework.batch.repeat.support.TaskExecutorRepeatTemplate#setThrottleLimit`
+* The interface `org.springframework.batch.repeat.support.ResultHolder`
+* The interface `org.springframework.batch.repeat.support.ResultQueue`
+* The class `org.springframework.batch.repeat.support.ResultHolderResultQueue`
+* The class `org.springframework.batch.repeat.support.ThrottleLimitResultQueue` 
 
 Please refer to the Javadoc of each API for more details about the suggested replacement.
 
@@ -369,6 +380,7 @@ Moreover, the following APIs have been removed/updated without deprecation:
 * The methods `RemotePartitioningManagerStepBuilder#transactionManager(PlatformTransactionManager)` and `RemotePartitioningWorkerStepBuilder#transactionManager(PlatformTransactionManager)` were removed. A transaction manager is not required for those type of steps. This is related to issue https://github.com/spring-projects/spring-batch/issues/4130.
 * The method `JobParameter#getType` now returns `T` instead of `Object`
 * The constructors in `JobParameter` that took the 4 pre-defined job parameter types (date, string, long, double) where removed.
+* The constructor `SkipWrapper(Throwable e)` was removed
 
 # Pruning
 
