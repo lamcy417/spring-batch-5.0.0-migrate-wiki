@@ -393,3 +393,8 @@ was deprecated in version 4.3 and removed in version 5.0.
 ## JSR-352 implementation removal
 
 Due to a lack of adoption, the implementation of the JSR-352 has been discontinued in this release.
+
+## Gemfire support removal
+
+Based on the [decision to discontinue](https://github.com/spring-projects/spring-data-geode#notice
+) the support of Spring Data for Apache Geode, the support for Geode in Spring Batch was removed. The code was moved to the [spring-batch-extensions](https://github.com/spring-projects/spring-batch-extensions) repository as a community-driven effort.
