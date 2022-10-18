@@ -381,6 +381,7 @@ Moreover, the following APIs have been removed/updated without deprecation:
 * The method `JobParameter#getType` now returns `T` instead of `Object`
 * The constructors in `JobParameter` that took the 4 pre-defined job parameter types (date, string, long, double) where removed.
 * The constructor `SkipWrapper(Throwable e)` was removed
+* The setter `setIsolationLevelForCreate(Isolation)` in `AbstractJobRepositoryFactoryBean` was renamed to `setIsolationLevelForCreateEnum`
 
 # Pruning
 
