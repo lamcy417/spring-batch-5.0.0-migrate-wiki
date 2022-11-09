@@ -382,8 +382,8 @@ Moreover, the following APIs have been removed/updated without deprecation:
 * The constructors in `JobParameter` that took the 4 pre-defined job parameter types (date, string, long, double) where removed.
 * The constructor `SkipWrapper(Throwable e)` was removed
 * The setter `setIsolationLevelForCreate(Isolation)` in `AbstractJobRepositoryFactoryBean` was renamed to `setIsolationLevelForCreateEnum`
-* The return type of `JobInstanceDao#getJobInstanceCount` has been changed from `int` to `long`
-* The return type of `StepExecutionDao#countStepExecutions` has been changed from `int` to `long`
+* The return type of `JobExplorer#getJobInstanceCount` and `JobInstanceDao#getJobInstanceCount` has been changed from `int` to `long`
+* The return type of `JobRepository#getStepExecutionCount` and `StepExecutionDao#countStepExecutions` has been changed from `int` to `long`
 
 # Pruning
 
