@@ -90,7 +90,7 @@ CREATE TABLE BATCH_JOB_EXECUTION_PARAMS  (
 
 This is related to the way job parameters are persisted as revisited in https://github.com/spring-projects/spring-batch/issues/3960. Migration scripts can be found in `org/springframework/batch/core/migration/5.0`.
 
-## Infrastructure beans configuration with `@EnableBatchBatchProcessing`
+## Infrastructure beans configuration with `@EnableBatchProcessing`
 
 ### Job repository/explorer configuration updates
 
