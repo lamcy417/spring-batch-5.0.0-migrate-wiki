@@ -133,9 +133,14 @@ public class MyStepConfig {
 public class MyStepConfig {
 
     @Bean
+    public Tasklet myTasklet() {
+       return new MyTasklet();
+    }
+
+    @Bean
     public Step myStep(JobRepository jobRepository, Tasklet myTasklet, PlatformTransactionManager transactionManager) {
         return new StepBuilder("myStep", jobRepository)
-                .tasklet(myTasklet, transactionManager)
+                .tasklet(myTasklet, transactionManager) // or .chunk(chunkSize, transactionManager)
                 .build();
     }
 
